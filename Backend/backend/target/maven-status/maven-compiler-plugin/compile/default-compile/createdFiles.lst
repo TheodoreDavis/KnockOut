@@ -1,0 +1,14 @@
+application\controllers\UserController.class
+application\users\UserRepository.class
+application\items\ItemRepository.class
+application\controllers\MainController.class
+application\users\User.class
+application\controllers\ItemController.class
+application\users\Administrator.class
+application\users\Moderator.class
+application\users\Player.class
+application\users\User$Location.class
+application\items\ItemsAbs.class
+application\items\Camera.class
+application\items\Items.class
+application\BackendApplication.class

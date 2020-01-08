@@ -1,0 +1,9 @@
+{
+  "BasicUserInfo": 
+    {
+      "name": "Jeffrey",		//The user name of the player
+      "lat": "123",				//The latitude of the player
+      "long": "55555"			//The longitude of the player
+    }
+  
+}

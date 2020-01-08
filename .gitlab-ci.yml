@@ -1,0 +1,46 @@
+# Stages of pipeline, should match with stage tag inside each job.
+# Each stages executes in sequence, if previous job fails, then all the preceeding jobs are skipped.
+stages:
+  - deployDocs
+  - androidbuild
+  - androidtest
+  
+# Below stage deploys javadocs
+deployDocs:
+  stage: deployDocs
+  tags:
+    - spring
+  script:
+    - cd Documents/
+    - sudo rm -f -r /var/www/html/docs/backend/*
+    - sudo rm -f -r /var/www/html/docs/FrontendJavadocs/*
+    - sudo mv -f BackendJavadocs/doc/* /var/www/html/docs/backend
+    - sudo mv -f FrontendJavadocs/* /var/www/html/docs/FrontendJavadocs
+    
+android-build:
+  image: javiersantos/android-ci:latest
+  stage: androidbuild
+  before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - chmod +x ./Frontend/Knockout_007/gradlew
+  tags:
+   - android
+  script:
+    - cd Frontend/Knockout_007
+    - ./gradlew assemble
+  artifacts:
+    paths:
+    - Frontend/Knockout_007/app/build/outputs/
+    
+# To run Android unit tests.   
+unitTests:
+  image: javiersantos/android-ci:latest
+  stage: androidtest
+  before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - chmod +x ./Frontend/Knockout_007/gradlew
+  tags:
+   - android
+  script:
+    - cd Frontend/Knockout_007
+    - ./gradlew test
